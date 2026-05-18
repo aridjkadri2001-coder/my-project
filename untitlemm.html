@@ -1,0 +1,300 @@
+<!DOCTYPE html><html lang="ar" dir="rtl"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>إلى حياة ❤️</title><style>
+
+body{
+    margin:0;
+    overflow-x:hidden;
+    min-height:100vh;
+    background:linear-gradient(135deg,#ffd6e7,#ffc2f3);
+    font-family:Arial;
+    text-align:center;
+}
+
+.container{
+    padding-top:40px;
+}
+
+h1{
+    color:#ff2f78;
+}
+
+.envelope{
+    width:220px;
+    height:150px;
+    background:#ff4f87;
+    margin:30px auto;
+    position:relative;
+    border-radius:12px;
+    cursor:pointer;
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+    transition:0.3s;
+}
+
+.envelope:hover{
+    transform:scale(1.05);
+}
+
+.envelope:before{
+    content:'';
+    position:absolute;
+    top:0;
+    left:0;
+    width:0;
+    height:0;
+    border-left:110px solid transparent;
+    border-right:110px solid transparent;
+    border-top:80px solid #ff8eb0;
+}
+
+.message{
+    width:320px;
+    margin:20px auto;
+    background:white;
+    padding:20px;
+    border-radius:20px;
+    min-height:80px;
+    font-size:20px;
+    color:#444;
+    box-shadow:0 10px 25px rgba(0,0,0,0.15);
+}
+
+.heart,.balloon,.spark{
+    position:absolute;
+    pointer-events:none;
+}
+
+.heart{
+    animation:float 4s linear forwards;
+}
+
+.balloon{
+    animation:balloon 5s linear forwards;
+    font-size:35px;
+}
+
+.spark{
+    animation:spark 1s linear forwards;
+    color:gold;
+}
+
+@keyframes float{
+    from{
+        transform:translateY(0);
+        opacity:1;
+    }
+    to{
+        transform:translateY(-500px);
+        opacity:0;
+    }
+}
+
+@keyframes balloon{
+    from{
+        transform:translateY(100px);
+        opacity:1;
+    }
+    to{
+        transform:translateY(-700px);
+        opacity:0;
+    }
+}
+
+@keyframes spark{
+    from{
+        transform:scale(0);
+        opacity:1;
+    }
+    to{
+        transform:scale(3);
+        opacity:0;
+    }
+}
+
+/* اللعبة */
+
+#game{
+    margin-top:40px;
+}
+
+#heartGame{
+    font-size:70px;
+    cursor:pointer;
+    animation:pulse 1s infinite;
+}
+
+@keyframes pulse{
+    0%{transform:scale(1);}
+    50%{transform:scale(1.2);}
+    100%{transform:scale(1);}
+}
+
+#score{
+    color:#ff2f78;
+    font-size:30px;
+}
+
+#gameMessage{
+    margin-top:20px;
+    font-size:22px;
+    color:#ff2f78;
+    padding:10px;
+}
+
+</style></head><body><!-- موسيقى --><audio autoplay loop>
+<source src="music.mp3" type="audio/mpeg">
+</audio><div class="container"><h1>إلى حياة ❤️</h1><div class="envelope" onclick="openMessage()"></div><div class="message" id="message">
+اضغطي على الظرف 💌
+</div><!-- اللعبة --><div id="game"><h2>لعبة جمع القلوب ❤️</h2><p>النقاط: <span id="score">0</span></p><div id="heartGame" onclick="collectHeart()">
+❤️
+</div><p id="gameMessage"></p></div></div><script>
+
+/* رسائل الظرف */
+
+const messages = [
+
+"حياة... وجودكِ أجمل شيء في أيامي 🌸",
+
+"أنتِ الشخص الذي يجعلني أبتسم دائمًا ❤️",
+
+"صداقتكِ تعني لي الكثير جدًا 💖",
+
+"كل لحظة معكِ جميلة ✨",
+
+"أحبكِ جدًا يا حياة 💌",
+
+"شكرًا لأنكِ دائمًا بجانبي 🎀"
+
+];
+
+let index = 0;
+
+function openMessage(){
+
+    if(index < messages.length){
+
+        document.getElementById('message').innerHTML =
+        messages[index];
+
+        index++;
+
+    }else{
+
+        document.getElementById('message').innerHTML =
+        "انتهت الرسالة لكن حبي لكِ لا ينتهي ❤️";
+    }
+
+    createHearts();
+    createBalloons();
+    createSparks();
+}
+
+/* القلوب */
+
+function createHearts(){
+
+    for(let i=0;i<10;i++){
+
+        const heart=document.createElement('div');
+
+        heart.classList.add('heart');
+
+        heart.innerHTML='❤️';
+
+        heart.style.left=Math.random()*window.innerWidth+'px';
+
+        heart.style.top=Math.random()*window.innerHeight+'px';
+
+        heart.style.fontSize=(Math.random()*30+20)+'px';
+
+        document.body.appendChild(heart);
+
+        setTimeout(()=>{
+            heart.remove();
+        },4000);
+    }
+}
+
+/* البالونات */
+
+function createBalloons(){
+
+    for(let i=0;i<8;i++){
+
+        const balloon=document.createElement('div');
+
+        balloon.classList.add('balloon');
+
+        balloon.innerHTML='🎈';
+
+        balloon.style.left=Math.random()*window.innerWidth+'px';
+
+        balloon.style.top=window.innerHeight+'px';
+
+        document.body.appendChild(balloon);
+
+        setTimeout(()=>{
+            balloon.remove();
+        },5000);
+    }
+}
+
+/* المفرقعات */
+
+function createSparks(){
+
+    for(let i=0;i<20;i++){
+
+        const spark=document.createElement('div');
+
+        spark.classList.add('spark');
+
+        spark.innerHTML='✨';
+
+        spark.style.left=Math.random()*window.innerWidth+'px';
+
+        spark.style.top=Math.random()*window.innerHeight+'px';
+
+        spark.style.fontSize='25px';
+
+        document.body.appendChild(spark);
+
+        setTimeout(()=>{
+            spark.remove();
+        },1000);
+    }
+}
+
+/* اللعبة */
+
+let score = 0;
+
+const gameMessages = [
+
+"حياة أنتِ ألطف شخص ❤️",
+
+"أحبكِ جدًا يا حياة 💌",
+
+"وجودكِ يجعل الحياة أجمل ✨",
+
+"أنتِ صديقة لا تُعوّض 🌸",
+
+"قلبي سعيد بوجودكِ 💖"
+
+];
+
+function collectHeart(){
+
+    score++;
+
+    document.getElementById('score').innerHTML = score;
+
+    document.getElementById('gameMessage').innerHTML =
+
+    gameMessages[Math.floor(Math.random()*gameMessages.length)];
+
+    createHearts();
+}
+
+</script></body>
+</html>
